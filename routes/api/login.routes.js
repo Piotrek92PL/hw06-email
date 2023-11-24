@@ -14,22 +14,30 @@ router.post('/login', async (req, res) => {
   try {
     const { error } = loginSchema.validate(req.body);
     if (error) {
+      console.log('Login validation error:', error.details[0].message);
       return res.status(400).json({ message: error.details[0].message });
     }
 
     const { email, password } = req.body;
-    console.log('Received password for login:', password);
+    console.log(`Login attempt for email: ${email}`, password);
 
     const user = await User.findOne({ email });
-    console.log('User found during login:', user);
-    console.log('Stored hashed password for login:', user.password);
-
-    const isMatch = user && (await bcrypt.compare(password, user.password));
-    console.log('Password match:', isMatch);
-    if (!isMatch) {
+    if (!user) {
+      console.log('User not found during login:', email);
       return res.status(401).json({ message: 'Email or password is wrong' });
     }
-    console.log('Password match:', isMatch);
+
+    console.log(`Stored hashed password for user ${email}:`, user.password);
+ 
+    console.log(`Password provided for login: ${password}`);
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log(`Password match for user ${email}:`, isMatch);
+    
+    if (!isMatch) {
+      console.log('Password mismatch for user:', email);
+      return res.status(401).json({ message: 'Email or password is wrong' });
+    }
 
     const payload = {
       id: user._id,
@@ -40,6 +48,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
+    console.log(`User logged in successfully: ${email}`);
     res.json({
       status: 'success',
       code: 200,
@@ -49,6 +58,7 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (error) {
+    console.error('Error in user login:', error);
     res.status(400).json({ message: 'Bad request' });
   }
 });
