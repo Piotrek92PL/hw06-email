@@ -1,6 +1,7 @@
 # Aplikacja Kontaktów
 
-Aplikacja Kontaktów to REST API umożliwiające zarządzanie listą kontaktów. Pozwala użytkownikom na dodawanie, aktualizowanie, przeglądanie i usuwanie informacji kontaktowych. Dodatkowo, aplikacja wspiera oznaczanie kontaktów jako ulubione oraz funkcje uwierzytelnienia i autoryzacji użytkowników.
+Aplikacja Kontaktów to REST API umożliwiające zarządzanie listą kontaktów. Pozwala użytkownikom na dodawanie, aktualizowanie, przeglądanie i usuwanie informacji kontaktowych. Dodatkowo, aplikacja wspiera oznaczanie kontaktów jako ulubione oraz funkcje uwierzytelnienia i autoryzacji użytkowników, w tym weryfikację adresu email.
+
 
 ## Funkcjonalności
 
@@ -16,6 +17,8 @@ Aplikacja Kontaktów to REST API umożliwiające zarządzanie listą kontaktów.
 - **Pobieranie danych aktualnego użytkownika**: Wyświetlanie informacji o aktualnie zalogowanym użytkowniku.
 - **Aktualizacja awatara użytkownika**: Możliwość zmiany awatara przez użytkownika. Awatar jest przetwarzany do jednolitego rozmiaru i zapisywany w systemie plików serwera.
 - **Automatyczne generowanie awatara**: Dla nowo rejestrowanych użytkowników generowany jest awatar za pomocą Gravatara, na podstawie adresu email.
+- **Weryfikacja Emaila**: Po rejestracji użytkownik otrzymuje email z linkiem do weryfikacji. Musi kliknąć w link, aby aktywować konto.
+- **Ponowne Wysyłanie Emaila Weryfikacyjnego**: Jeśli użytkownik nie otrzymał emaila, może poprosić o jego ponowne wysłanie.
 
 ## Technologie
 
@@ -29,3 +32,4 @@ Aplikacja została zbudowana z wykorzystaniem:
 - bcryptjs: Biblioteka do hashowania haseł, używana w procesie autoryzacji.
 - Jimp - Biblioteka do przetwarzania obrazów w Node.js, używana do manipulacji awatarami użytkowników.
 - Multer - Middleware dla Express.js do obsługi multipart/form-data, używany do przesyłania plików.
+- SendGrid - Serwis do zarządzania i wysyłania emaili, wykorzystywany do funkcjonalności weryfikacji emaila i ponownego wysyłania wiadomości weryfikacyjnej
